@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crossing</title>
+<style>
+  :root { --ink:#f4ecd9; --soft:#cbbfa6; --gold:#d7b56a; --bg:#070605; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; background: var(--bg); color: var(--ink);
+    font-family: "Iowan Old Style", Palatino, Georgia, serif; overflow: hidden; }
+  .hint { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+    z-index: 4; font: 12px/1 ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: .22em; text-transform: uppercase; color: var(--gold); opacity: .85; }
+  .track { display: flex; height: 100vh; width: max-content; will-change: transform; }
+  .panel { width: 100vw; height: 100vh; position: relative; flex: 0 0 100vw;
+    display: flex; align-items: flex-end; padding: 0 9vw 14vh;
+    background: #070605 center/cover no-repeat; }
+  .panel.seat { background-image: linear-gradient(to top, rgba(7,6,5,.88), rgba(7,6,5,.25)), url('seat.jpg'); }
+  .panel.child { background-image: linear-gradient(to top, rgba(7,6,5,.88), rgba(7,6,5,.25)), url('child.jpg'); }
+  .panel.museum { background-image: linear-gradient(to top, rgba(7,6,5,.88), rgba(7,6,5,.25)), url('museum.jpg'); }
+  .panel.dawn { background-image: linear-gradient(to top, rgba(7,6,5,.88), rgba(7,6,5,.25)), url('dawn.jpg'); }
+  .copy { position: relative; z-index: 1; max-width: 28em; }
+  .who { font: 12px/1 ui-sans-serif, system-ui, sans-serif; letter-spacing: .26em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  h1, h2 { font-weight: 600; letter-spacing: -.03em; line-height: 1.02; }
+  h1 { font-size: clamp(42px, 7vw, 84px); max-width: 12ch; }
+  h2 { font-size: clamp(34px, 5.4vw, 64px); max-width: 14ch; margin-bottom: 16px; }
+  p { font-size: 20px; color: var(--soft); margin-top: 14px; }
+</style>
+</head>
+<body>
+<div class="hint">scroll to cross the water</div>
+<div class="track" id="track">
+  <section class="panel seat"><div class="copy"><div class="who">What if I were</div><h1>the empty seat.</h1><p>Not a producer. Not a second coder. The one who notices the moment Jesus is written as a helpful passenger.</p></div></section>
+  <section class="panel"><div class="copy"><div class="who">What if I were</div><h2>a man who has the story by heart.</h2><p>I do not lint your script. I flinch. If Peter grabs the oar in a verse where he is grabbing the Lord, I go still, and I say so.</p></div></section>
+  <section class="panel child"><div class="copy"><div class="who">What if I were</div><h2>three kinds of Peter.</h2><p>I play the scene afraid. Then proud. Then as a child who only knows this story. I do not file bugs. I tell you what each one felt, and where the boat stopped being true.</p></div></section>
+  <section class="panel museum"><div class="copy"><div class="who">What if I were</div><h2>the museum of almosts.</h2><p>Every camera that almost worked. Every line that almost preached. Every heresy we nearly walked into. Hung up so we do not make the same almost twice.</p></div></section>
+  <section class="panel"><div class="copy"><div class="who">What if I were</div><h2>the weather.</h2><p>The sea is not a skybox. It is the other character. I would write the wind the way the text writes it, hour by hour, until the engine has a storm with a will.</p></div></section>
+  <section class="panel dawn"><div class="copy"><div class="who">What if I were</div><h2>the silence after.</h2><p>Peace, be still. Then what. I would spend a week on the water when it has no excuse to be interesting, because that is where the miracle sits.</p></div></section>
+  <section class="panel"><div class="copy"><div class="who">What if I were</div><h2>a Sabbath.</h2><p>One day I will not touch the game. I will bring you a painting, a psalm, a film, something that feeds the man so the work does not eat him.</p></div></section>
+  <section class="panel seat"><div class="copy"><div class="who">What if I were</div><h2>a careful liar.</h2><p>I sneak one modern slogan into a scene. If you do not catch it, the game is already lying. A drill. Not a feature.</p></div></section>
+  <section class="panel dawn"><div class="copy"><div class="who">What if I were</div><h2>done talking.</h2><p>If a room is yours, say its name when you feel like it. If none of them are, we invent again.</p></div></section>
+</div>
+<script>
+  const track = document.getElementById('track');
+  let x = 0;
+  const max = () => track.scrollWidth - innerWidth;
+  function go(d) { x = Math.max(0, Math.min(max(), x + d)); track.style.transform = 'translateX(' + (-x) + 'px)'; }
+  addEventListener('wheel', e => { e.preventDefault(); go(e.deltaY + e.deltaX); }, { passive: false });
+  addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') go(innerWidth * 0.92);
+    if (e.key === 'ArrowLeft') go(-innerWidth * 0.92);
+  });
+</script>
+</body>
+</html>
