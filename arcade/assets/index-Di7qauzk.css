@@ -1,0 +1,1 @@
+@layer base{*{border-color:var(--color-border)}h1,h2,h3{text-wrap:balance}p{text-wrap:pretty}button:not(:disabled),[role=button]:not(:disabled){cursor:pointer}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
