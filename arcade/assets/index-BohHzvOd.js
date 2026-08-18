@@ -1,1 +1,0 @@
-import{r as o,j as n,h as s}from"./index-DlycF9-D.js";var f=Object.defineProperty,i=(t,r)=>f(t,"name",{value:r,configurable:!0}),u=o.forwardRef(i(function(r,a){return n.jsx(s.label,{...r,ref:a,onMouseDown:e=>{e.target.closest("button, input, select, textarea")||(r.onMouseDown?.(e),!e.defaultPrevented&&e.detail>1&&e.preventDefault())}})},"Label")),c=u;export{u as L,c as R};

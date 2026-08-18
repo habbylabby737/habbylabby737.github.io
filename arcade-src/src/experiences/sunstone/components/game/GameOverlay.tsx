@@ -1,10 +1,7 @@
 import type { ReactNode } from "react";
 import { Gem, Pause, Timer } from "lucide-react";
-import { SignedOut, UserButton } from "@/shared/auth";
-import { useCurrentUserState } from "@/shared/auth";
 import { useGameStore } from "@/experiences/sunstone/game/store";
 import { Button } from "@/experiences/sunstone/components/ui/button";
-import { Link } from "react-router-dom";
 
 function formatTime(s: number) {
   const m = Math.floor(s / 60);
@@ -14,22 +11,6 @@ function formatTime(s: number) {
     .toString()
     .padStart(2, "0");
   return `${m}:${whole.toString().padStart(2, "0")}.${frac}`;
-}
-
-function AuthSlot() {
-  const { user, isPending } = useCurrentUserState();
-  if (isPending) {
-    return <div className="size-8 animate-pulse rounded-full bg-elevated" />;
-  }
-  if (user) return <UserButton />;
-  return (
-    <Link
-      to="/"
-      className="text-sm font-medium text-muted transition-colors duration-(--motion-quick) hover:text-foreground"
-    >
-      Sign in
-    </Link>
-  );
 }
 
 export function GameOverlay({
@@ -83,11 +64,10 @@ export function GameOverlay({
       {phase === "title" && (
         <div className="absolute inset-0 z-20 flex items-end justify-center bg-background/35 p-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:items-center">
           <div className="overlay-enter w-full max-w-md rounded-xl border border-border bg-surface/92 p-6 shadow-panel sm:p-8">
-            <div className="mb-6 flex items-center justify-between">
+            <div className="mb-6">
               <p className="text-xs font-medium uppercase tracking-[0.18em] text-muted">
                 Low-poly maze
               </p>
-              <AuthSlot />
             </div>
             <h1 className="font-display text-5xl leading-none tracking-[-0.03em] text-foreground sm:text-6xl">
               Sunstone
@@ -114,11 +94,6 @@ export function GameOverlay({
               <Button size="lg" className="w-full sm:flex-1" onClick={onPlay}>
                 Enter the maze
               </Button>
-              <SignedOut>
-                <Button size="lg" variant="outline" className="w-full sm:w-auto" asChild>
-                  <Link to="/">Sign in</Link>
-                </Button>
-              </SignedOut>
             </div>
             {bestTime !== null ? (
               <p className="mt-5 text-xs tabular-nums text-subtle">

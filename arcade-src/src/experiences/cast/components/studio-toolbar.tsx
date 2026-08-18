@@ -1,7 +1,4 @@
 import { Download, Keyboard, Shuffle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { signOut, authEnabled } from "@/shared/auth";
-import { useCurrentUserState } from "@/shared/auth";
 import { usePalette } from "@/experiences/cast/store/palette";
 import { HarmonyMenu } from "./harmony-menu";
 import { Button } from "./ui/button";
@@ -69,49 +66,7 @@ export function StudioToolbar({ onExport, onShortcuts }: StudioToolbarProps) {
           </Button>
         </Tooltip>
 
-        <AuthSlot />
       </div>
     </header>
-  );
-}
-
-function AuthSlot() {
-  const { user, isPending } = useCurrentUserState();
-  if (isPending) {
-    return <div className="size-10 shrink-0 animate-pulse rounded-full bg-ink/10" />;
-  }
-  if (!user) {
-    return (
-      <Button variant="outline" size="sm" asChild>
-        <Link to="/">Sign in</Link>
-      </Button>
-    );
-  }
-  const initial = (user.displayName ?? user.primaryEmail ?? "A").charAt(0).toUpperCase();
-  return (
-    <div className="flex items-center gap-2 pl-1">
-      {user.profileImageUrl ? (
-        <img
-          src={user.profileImageUrl}
-          alt=""
-          className="size-8 rounded-full object-cover"
-        />
-      ) : (
-        <span className="grid size-8 place-items-center rounded-full bg-ink/10 text-xs font-medium">
-          {initial}
-        </span>
-      )}
-      {authEnabled ? (
-        <button
-          type="button"
-          onClick={() => void signOut()}
-          className="text-xs text-mute underline-offset-4 transition-colors duration-[var(--motion-quick)] hover:text-ink hover:underline"
-        >
-          Sign out
-        </button>
-      ) : (
-        <span className="text-xs text-mute">{user.displayName ?? "Dev"}</span>
-      )}
-    </div>
   );
 }

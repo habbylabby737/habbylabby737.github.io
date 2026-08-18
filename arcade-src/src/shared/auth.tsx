@@ -13,11 +13,14 @@ export type CurrentUserState = {
   isPending: boolean;
 };
 
+export const authEnabled = false;
+
 export function SignedIn(_props: { children?: ReactNode }) {
   return null;
 }
 
 export function SignedOut({ children }: { children?: ReactNode }) {
+  if (!authEnabled) return null;
   return children ?? null;
 }
 
@@ -28,8 +31,6 @@ export function UserButton() {
 export function useCurrentUserState(): CurrentUserState {
   return { user: null, isPending: false };
 }
-
-export const authEnabled = false;
 
 export async function signOut() {}
 

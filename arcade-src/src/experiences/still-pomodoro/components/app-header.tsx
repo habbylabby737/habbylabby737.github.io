@@ -1,8 +1,4 @@
-import { Link } from "react-router-dom";
 import { SettingsDialog } from "@/experiences/still-pomodoro/components/settings-dialog";
-import { Button } from "@/experiences/still-pomodoro/components/ui/button";
-import { useCurrentUserState } from "@/shared/auth";
-import { UserButton } from "@/shared/auth";
 import { usePomodoroStore } from "@/experiences/still-pomodoro/lib/pomodoro-store";
 import { cn } from "@/shared/cn";
 
@@ -35,32 +31,13 @@ function CycleDots() {
   );
 }
 
-function AuthSlot() {
-  const { user, isPending } = useCurrentUserState();
-  if (isPending) {
-    return <div className="size-8 animate-pulse rounded-full bg-surface-2" aria-hidden="true" />;
-  }
-  if (user) {
-    return (
-      <div className="hidden sm:block">
-        <UserButton />
-      </div>
-    );
-  }
-  return (
-    <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex">
-      <Link to="/">Sign in</Link>
-    </Button>
-  );
-}
-
 export function AppHeader() {
   const completedToday = usePomodoroStore((s) => s.completedToday);
 
   return (
     <header className="flex items-center justify-between gap-3">
       <div className="flex min-w-0 items-baseline gap-3">
-        <h1 className="font-display text-2xl font-medium tracking-tight italic text-fg">Still</h1>
+        <h1 className="font-display text-2xl font-medium tracking-tight italic text-fg">Still Timer</h1>
         <p className="text-sm text-muted">
           <span className="tabular-nums text-fg">{completedToday}</span>
           {" "}
@@ -69,7 +46,6 @@ export function AppHeader() {
       </div>
       <div className="flex items-center gap-1 sm:gap-2">
         <CycleDots />
-        <AuthSlot />
         <SettingsDialog />
       </div>
     </header>
