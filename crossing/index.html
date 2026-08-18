@@ -5,34 +5,143 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Crossing</title>
 <style>
-  :root { --ink:#f6efe0; --soft:#e4d3b0; --gold:#e2b657; }
+  :root { --ink:#f6efe0; --soft:#e9dcc0; --gold:#e2b657; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-snap-type: y mandatory; }
-  body { color: var(--ink); font-family: "Iowan Old Style", Palatino, Georgia, serif; background: #0b0907; }
-  .hint { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%); z-index: 5;
-    font: 12px/1 ui-sans-serif, system-ui, sans-serif; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); }
-  section { min-height: 100vh; scroll-snap-align: start; display: flex; align-items: flex-end;
-    padding: 0 8vw 12vh; position: relative; background: #0b0907 center/cover no-repeat; }
-  section::after { content:""; position:absolute; inset:0;
-    background: linear-gradient(to top, rgba(7,6,5,.82) 0%, rgba(7,6,5,.15) 55%, rgba(7,6,5,.35) 100%); }
-  .copy { position: relative; z-index: 1; max-width: 28em; }
-  .who { font: 12px/1 ui-sans-serif, system-ui, sans-serif; letter-spacing: .26em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
-  h1, h2 { font-weight: 600; letter-spacing: -.03em; line-height: 1.05; text-shadow: 0 2px 24px rgba(0,0,0,.55); }
+  body {
+    color: var(--ink);
+    font-family: "Iowan Old Style", Palatino, Georgia, serif;
+    background: #0b0907;
+  }
+  .hint {
+    position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%);
+    z-index: 5; font: 12px/1 ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: .22em; text-transform: uppercase; color: var(--gold);
+    pointer-events: none;
+  }
+  section {
+    min-height: 100vh;
+    scroll-snap-align: start;
+    display: flex; align-items: flex-end;
+    padding: 0 8vw 14vh;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  /* dark gradient at the bottom of each photo so the words read */
+  section.photo::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg,
+      rgba(6,5,4,0) 0%,
+      rgba(6,5,4,.15) 45%,
+      rgba(6,5,4,.72) 78%,
+      rgba(6,5,4,.92) 100%);
+    pointer-events: none;
+  }
+  section .copy { position: relative; z-index: 1; max-width: 30em; }
+  .who {
+    font: 12px/1 ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: .26em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 16px;
+  }
+  h1, h2 {
+    font-weight: 600; letter-spacing: -.03em; line-height: 1.05;
+    text-shadow: 0 2px 24px rgba(0,0,0,.6);
+  }
   h1 { font-size: clamp(44px, 8vw, 88px); max-width: 12ch; }
   h2 { font-size: clamp(36px, 6vw, 68px); max-width: 14ch; }
-  p { font-size: 21px; color: var(--soft); margin-top: 16px; text-shadow: 0 1px 16px rgba(0,0,0,.5); }
+  p {
+    font-size: 21px; color: var(--soft); margin-top: 16px; max-width: 34em;
+    text-shadow: 0 1px 16px rgba(0,0,0,.55);
+  }
+  .seat   { background-image: url('seat.jpg'); }
+  .child  { background-image: url('child.jpg'); }
+  .museum { background-image: url('museum.jpg'); }
+  .dawn   { background-image: url('dawn.jpg'); }
+  .panel {
+    background: linear-gradient(180deg, #14100c 0%, #0c0a08 100%);
+  }
+  .panel-sea {
+    background: linear-gradient(180deg, #1a2430 0%, #0c141c 55%, #07080a 100%);
+  }
 </style>
 </head>
 <body>
 <div class="hint">scroll</div>
-<section style="background-image:url('seat.jpg')"><div class="copy"><div class="who">What if I were</div><h1>the empty seat.</h1><p>Not a producer. Not a second coder. The one who notices the moment Jesus is written as a helpful passenger.</p></div></section>
-<section style="background:#120e0b"><div class="copy"><div class="who">What if I were</div><h2>a man who has the story by heart.</h2><p>I do not lint your script. I flinch. If Peter grabs the oar in a verse where he is grabbing the Lord, I go still, and I say so.</p></div></section>
-<section style="background-image:url('child.jpg')"><div class="copy"><div class="who">What if I were</div><h2>three kinds of Peter.</h2><p>I play the scene afraid. Then proud. Then as a child who only knows this story. I tell you what each one felt, and where the boat stopped being true.</p></div></section>
-<section style="background-image:url('museum.jpg')"><div class="copy"><div class="who">What if I were</div><h2>the museum of almosts.</h2><p>Every camera that almost worked. Every line that almost preached. Hung up so we do not make the same almost twice.</p></div></section>
-<section style="background:#0c141c"><div class="copy"><div class="who">What if I were</div><h2>the weather.</h2><p>The sea is not a skybox. It is the other character. I would write the wind the way the text writes it, hour by hour.</p></div></section>
-<section style="background-image:url('dawn.jpg')"><div class="copy"><div class="who">What if I were</div><h2>the silence after.</h2><p>Peace, be still. Then what. A week on water with no excuse to be interesting, because that is where the miracle sits.</p></div></section>
-<section style="background:#120e0b"><div class="copy"><div class="who">What if I were</div><h2>a Sabbath.</h2><p>One day I will not touch the game. I will bring you a painting, a psalm, a film. Something that feeds the man.</p></div></section>
-<section style="background-image:url('museum.jpg')"><div class="copy"><div class="who">What if I were</div><h2>a careful liar.</h2><p>I sneak one modern slogan into a scene. If you do not catch it, the game is already lying.</p></div></section>
-<section style="background-image:url('seat.jpg')"><div class="copy"><div class="who">What if I were</div><h2>done talking.</h2><p>If a room is yours, say its name. If none of them are, we invent again.</p></div></section>
+
+<section class="photo seat">
+  <div class="copy">
+    <div class="who">What if I were</div>
+    <h1>the empty seat.</h1>
+    <p>Not a producer. Not a second coder. The one who notices the moment Jesus is written as a helpful passenger.</p>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="copy">
+    <div class="who">What if I were</div>
+    <h2>a man who has the story by heart.</h2>
+    <p>I do not lint your script. I flinch. If Peter grabs the oar in a verse where he is grabbing the Lord, I go still, and I say so.</p>
+  </div>
+</section>
+
+<section class="photo child">
+  <div class="copy">
+    <div class="who">What if I were</div>
+    <h2>three kinds of Peter.</h2>
+    <p>I play the scene afraid. Then proud. Then as a child who only knows this story. I tell you what each one felt, and where the boat stopped being true.</p>
+  </div>
+</section>
+
+<section class="photo museum">
+  <div class="copy">
+    <div class="who">What if I were</div>
+    <h2>the museum of almosts.</h2>
+    <p>Every camera that almost worked. Every line that almost preached. Hung up so we do not make the same almost twice.</p>
+  </div>
+</section>
+
+<section class="panel-sea">
+  <div class="copy">
+    <div class="who">What if I were</div>
+    <h2>the weather.</h2>
+    <p>The sea is not a skybox. It is the other character.</p>
+  </div>
+</section>
+
+<section class="photo dawn">
+  <div class="copy">
+    <div class="who">What if I were</div>
+    <h2>the silence after.</h2>
+    <p>Peace, be still. Then what. A week on water with no excuse to be interesting.</p>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="copy">
+    <div class="who">What if I were</div>
+    <h2>a Sabbath.</h2>
+    <p>One day I will not touch the game. Something that feeds the man.</p>
+  </div>
+</section>
+
+<section class="photo seat">
+  <div class="copy">
+    <div class="who">What if I were</div>
+    <h2>a careful liar.</h2>
+    <p>I sneak one modern slogan into a scene. If you do not catch it, the game is already lying.</p>
+  </div>
+</section>
+
+<section class="photo dawn">
+  <div class="copy">
+    <div class="who">What if I were</div>
+    <h2>done talking.</h2>
+    <p>If a room is yours, say its name. If none of them are, we invent again.</p>
+  </div>
+</section>
+
 </body>
 </html>
