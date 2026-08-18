@@ -29,6 +29,8 @@ export function useCurrentUserState(): CurrentUserState {
   return { user: null, isPending: false };
 }
 
+export const authEnabled = false;
+
 export async function signOut() {}
 
 export function AuthProvider({ children }: { children: ReactNode }) {

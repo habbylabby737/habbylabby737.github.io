@@ -21,6 +21,10 @@ npm run build
 
 The production build writes static files to `../arcade/` with base `/arcade/`.
 
+Routes use a hash (`/arcade/#/wakepoint`) so GitHub Pages can keep The Way’s root `404.html`.
+
 ## Rooms
 
 Games, explore rooms, toys, studios, and tools from the original one-shot repos, without the duplicated auth/server template.
+
+**Still** is the ripple toy. **Still Timer** is the Pomodoro. The original `still` repo was private, so the ripple studio was rebuilt from its published source files.

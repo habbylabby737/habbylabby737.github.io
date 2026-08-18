@@ -433,7 +433,7 @@ export function PixelEditor() {
 
       <AlertDialog
         open={pendingSize !== null}
-        onOpenChange={(open) => {
+        onOpenChange={(open: boolean) => {
           if (!open) setPendingSize(null);
         }}
       >

@@ -21,19 +21,6 @@ export type Hud = {
   ready: boolean;
 };
 
-export type ControlsProbe = {
-  getX: () => number;
-  getY: () => number;
-  getSpeed: () => number;
-  setKeys: (codes: string[]) => void;
-};
-
-declare global {
-  interface Window {
-    __controlsTest?: ControlsProbe;
-  }
-}
-
 const WORLD_W = 2200;
 const WORLD_H = 1600;
 const STEP = 1 / 60;
@@ -205,16 +192,6 @@ export class WakepointGame {
     this.resize();
     window.addEventListener("resize", this.resize);
     document.addEventListener("visibilitychange", this.onVis);
-    this.wireControlsTest();
-  }
-
-  private wireControlsTest() {
-    window.__controlsTest = {
-      getX: () => this.player.x,
-      getY: () => this.player.y,
-      getSpeed: () => Math.hypot(this.player.vx, this.player.vy),
-      setKeys: (codes) => this.input.setForcedKeys(codes),
-    };
   }
 
   async boot() {
@@ -231,7 +208,6 @@ export class WakepointGame {
     this.input.detach();
     window.removeEventListener("resize", this.resize);
     document.removeEventListener("visibilitychange", this.onVis);
-    delete window.__controlsTest;
   }
 
   private onVis = () => {

@@ -649,33 +649,6 @@ export function createEngine(
   canvas.addEventListener("mousemove", onMouseMove);
   canvas.addEventListener("click", onClick);
 
-  window.__controlsTest = {
-    getYaw: () => player.yaw,
-    getSpeed: () => Math.hypot(player.vx, player.vz),
-    getPosition: () => ({ x: player.x, y: player.y, z: player.z }),
-    setKeys: (codes) => {
-      keyOverride = codes.length ? new Set(codes) : null;
-    },
-    setYaw: (yaw) => {
-      player.yaw = yaw;
-    },
-    setPosition: (x, y, z) => {
-      player.x = x;
-      player.y = y;
-      player.z = z;
-      player.vx = 0;
-      player.vz = 0;
-    },
-    startGame: () => {
-      if (phase === "title" || phase === "won" || phase === "paused") {
-        phase = "playing";
-        pushHud(true);
-      }
-    },
-    getPhase: () => phase,
-    getExit: () => ({ x: world.exit.x, z: world.exit.z }),
-  };
-
   return {
     dispose() {
       disposed = true;
@@ -692,7 +665,6 @@ export function createEngine(
       burstGeo.dispose();
       burstMat.dispose();
       renderer.dispose();
-      if (window.__controlsTest) delete window.__controlsTest;
     },
     start,
     pause,
