@@ -1,0 +1,22 @@
+0,500;0,600;1,400&family=Syne:wght@500;600;700&display=swap");
+
+@layer base {
+  
+
+  
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
