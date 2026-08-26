@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>@Conor_D_Dart · reach briefing</title>
+<style>
+  :root { --bg:#081016; --ink:#f4f1ea; --muted:#9aa6b2; --line:rgba(244,241,234,.1); --gold:#e7b549; --card:rgba(255,255,255,.035); }
+  *{box-sizing:border-box} html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI","Helvetica Neue",sans-serif}
+  .wrap{max-width:1180px;margin:0 auto;padding:40px 22px 90px}
+  .kicker{color:var(--gold);letter-spacing:.16em;text-transform:uppercase;font-size:11px;font-weight:700}
+  h1{font-size:clamp(34px,6vw,64px);line-height:.95;letter-spacing:-.03em;margin:12px 0 16px}
+  .lede{max-width:720px;font-size:18px;color:var(--muted);line-height:1.55}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:34px 0 42px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+  .stat b{display:block;font-size:30px;letter-spacing:-.03em}
+  .stat span{color:var(--muted);font-size:13px}
+  h2{font-size:28px;letter-spacing:-.02em;margin:0 0 8px}
+  p{color:#d7dde3;line-height:1.55}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px;margin:14px 0 36px}
+  .filters{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 8px}
+  .chip{border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:7px 12px;cursor:pointer}
+  .chip.on{background:var(--ink);color:#081016}
+  #chart,#bars{width:100%;display:block}
+  #chart{height:460px} #bars{height:340px}
+  .tip{position:fixed;z-index:20;pointer-events:none;display:none;background:#111920;border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:10px 12px;min-width:180px}
+  .grid2{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
+  .copy{background:#05080b;border:1px solid var(--line);border-radius:16px;padding:16px 18px;white-space:pre-wrap}
+  button.primary{background:var(--gold);color:#1a1408;border:0;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer}
+  footer{color:var(--muted);font-size:12px;margin-top:40px}
+  @media(max-width:800px){.stats,.grid2{grid-template-columns:1fr}#chart{height:360px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kicker">Reach briefing · May–August 2026</div>
+  <h1>He did not fall from 400k to 50 because the account died.</h1>
+  <p class="lede">@Conor_D_Dart’s six-figure posts were a run of Anthropic vs OpenAI customer-drama takes. Original videos still clear 2k–15k in August. Short replies usually stop at the follower graph. Hover the chart. Filter by type.</p>
+  <div class="stats">
+    <div class="stat"><b>359,311</b><span>Best post · 7 Jul</span></div>
+    <div class="stat"><b>233,469</b><span>Already huge on 13 Jun</span></div>
+    <div class="stat"><b>14,883</b><span>Gemini video · 13 Aug</span></div>
+    <div class="stat"><b>~50</b><span>Typical short take today</span></div>
+  </div>
+  <h2>Four months of public posts</h2>
+  <p>Log scale. Click a filter. Hover any dot. Gold line = 13 July mutuals tweak — he still hit 135k and 104k that week.</p>
+  <div class="filters" id="filters"></div>
+  <div class="panel"><svg id="chart" viewBox="0 0 1100 460" preserveAspectRatio="none"></svg></div>
+  <div class="grid2">
+    <div>
+      <h2>Same account, three products</h2>
+      <p>A hot opinion, a finished video, and a one-liner are not the same thing to the ranker.</p>
+      <div class="panel"><svg id="bars" viewBox="0 0 900 340"></svg></div>
+    </div>
+    <div>
+      <h2>Send this</h2>
+      <div class="copy" id="reply">You’re not banned. Aug 13 your Gemini video did 15k, and a reply of yours today did 2.4k.
+
+The 359k post was Jul 7, about Anthropic yanking Fable. You still did 135k on Jul 13 and 104k on Jul 14. So that week’s algo tweak didn’t kill the account.
+
+Those big posts were takes on a fight everyone was already in. A lot of what you’re posting now are short replies, and X barely shows those to people who don’t follow you.
+
+That Under the Hood page is just the waitlist screen — no label report yet.
+
+Do one real standalone post or video a day. Treat the one-liners as chat, not as the main post.</div>
+      <p><button class="primary" id="copy">Copy reply</button></p>
+    </div>
+  </div>
+  <footer>Sampled public X view counts for @Conor_D_Dart as of 26 Aug 2026. Not every post. 1,471 followers.</footer>
+</div>
+<div class="tip" id="tip"></div>
+<script>
+const DATA=[
+  {d:'2026-05-28',v:24187,l:'Opus 4.8 game video',t:'video'},
+  {d:'2026-05-30',v:20660,l:'Opus 4.8 best so far',t:'video'},
+  {d:'2026-05-31',v:2324,l:'Opus weekend video',t:'video'},
+  {d:'2026-06-13',v:233469,l:'If GPT 5.6 rumors are true',t:'opinion'},
+  {d:'2026-06-15',v:36965,l:'Fable update rumors',t:'opinion'},
+  {d:'2026-06-16',v:26672,l:'Need Anthropic comms',t:'opinion'},
+  {d:'2026-06-19',v:72626,l:'4-model marble video',t:'video'},
+  {d:'2026-06-27',v:118021,l:'When do resets expire?',t:'opinion'},
+  {d:'2026-06-28',v:44092,l:'ChatGPT uses Codex limit?',t:'opinion'},
+  {d:'2026-06-29',v:21206,l:'GPT 5.6 Sol when?',t:'opinion'},
+  {d:'2026-07-01',v:68655,l:'Fable 5 game video',t:'video'},
+  {d:'2026-07-07',v:359311,l:'Anthropic usage rant',t:'opinion'},
+  {d:'2026-07-12',v:18654,l:'Fable extra week',t:'quote'},
+  {d:'2026-07-13',v:135314,l:'OpenAI vs Anthropic quote',t:'quote'},
+  {d:'2026-07-14',v:104418,l:'Cancelled $200 Anthropic',t:'opinion'},
+  {d:'2026-07-14',v:39362,l:'Opus 5 expectations',t:'opinion'},
+  {d:'2026-07-15',v:11894,l:'Kimi K3 video',t:'video'},
+  {d:'2026-07-19',v:12336,l:'Qwen 3.8 video',t:'video'},
+  {d:'2026-07-31',v:974,l:'No Claude reset',t:'quote'},
+  {d:'2026-08-12',v:152,l:'Grok bench video',t:'video'},
+  {d:'2026-08-13',v:14883,l:'Gemini 3.7 video',t:'video'},
+  {d:'2026-08-14',v:1001,l:'GLM 5.3 video',t:'video'},
+  {d:'2026-08-17',v:2118,l:'Grok RCT video',t:'video'},
+  {d:'2026-08-17',v:2966,l:'GPT-6 incoming quote',t:'quote'},
+  {d:'2026-08-19',v:1607,l:'Hot-thread reply',t:'reply'},
+  {d:'2026-08-21',v:916,l:'Ox Alpha video',t:'video'},
+  {d:'2026-08-26',v:2467,l:'Reply in hot thread',t:'reply'},
+  {d:'2026-08-26',v:55,l:'Typical short post',t:'short'}
+];
+const COL={opinion:'#ff6a3d',quote:'#e7b549',video:'#4cc3ff',reply:'#a9b4bf',short:'#7d8791'};
+const TYPES=['all','opinion','video','quote','reply','short'];
+let active='all';
+const tip=document.getElementById('tip');
+const svg=document.getElementById('chart');
+const W=1100,H=460,m={l:58,r:24,t:18,b:42};
+const t0=+new Date('2026-05-24'), t1=+new Date('2026-08-28');
+const x=t=>m.l+((+new Date(t)-t0)/(t1-t0))*(W-m.l-m.r);
+const y=v=>{const min=Math.log10(30),max=Math.log10(420000);return H-m.b-((Math.log10(v)-min)/(max-min))*(H-m.t-m.b)};
+const fmt=v=>v>=1000?Math.round(v/1000)+'k':String(v);
+function draw(){
+  const rows=DATA.filter(p=>active==='all'||p.t===active);
+  let html='';
+  [100,1000,10000,100000].forEach(v=>{
+    html+=`<line x1="${m.l}" x2="${W-m.r}" y1="${y(v)}" y2="${y(v)}" stroke="rgba(244,241,234,.08)"/>`;
+    html+=`<text x="${m.l-8}" y="${y(v)+4}" fill="#9aa6b2" font-size="11" text-anchor="end">${fmt(v)}</text>`;
+  });
+  ['2026-06-01','2026-07-01','2026-07-13','2026-08-01','2026-08-26'].forEach(d=>{
+    html+=`<text x="${x(d)}" y="${H-16}" fill="#9aa6b2" font-size="11" text-anchor="middle">${new Date(d+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'})}</text>`;
+  });
+  html+=`<line x1="${x('2026-07-13')}" x2="${x('2026-07-13')}" y1="${m.t}" y2="${H-m.b}" stroke="#e7b549" stroke-dasharray="4 4"/>`;
+  html+=`<text x="${x('2026-07-13')+6}" y="${m.t+12}" fill="#e7b549" font-size="11">13 Jul tweak</text>`;
+  html+=`<line x1="${m.l}" x2="${W-m.r}" y1="${y(1471)}" y2="${y(1471)}" stroke="#3dd68c" stroke-dasharray="3 6"/>`;
+  html+=`<polyline fill="none" stroke="rgba(244,241,234,.18)" stroke-width="2" points="${rows.map(p=>x(p.d).toFixed(1)+','+y(p.v).toFixed(1)).join(' ')}"/>`;
+  rows.forEach(p=>{
+    html+=`<circle cx="${x(p.d)}" cy="${y(p.v)}" r="6.5" fill="${COL[p.t]}" data-i="${DATA.indexOf(p)}" style="cursor:pointer"></circle>`;
+  });
+  svg.innerHTML=html;
+  svg.querySelectorAll('circle').forEach(c=>{
+    c.onmousemove=e=>{
+      const p=DATA[+c.dataset.i];
+      tip.style.display='block'; tip.style.left=e.clientX+12+'px'; tip.style.top=e.clientY+12+'px';
+      tip.innerHTML=`<b>${p.v.toLocaleString()} views</b><div style="color:#9aa6b2;font-size:12px">${p.d} · ${p.t}</div><div>${p.l}</div>`;
+    };
+    c.onmouseleave=()=>tip.style.display='none';
+  });
+}
+function bars(){
+  const s=document.getElementById('bars');
+  const groups=[{n:'Hot opinion',best:359311,typ:104418,c:'#ff6a3d'},{n:'Original video',best:14883,typ:2118,c:'#4cc3ff'},{n:'Short / reply',best:2467,typ:50,c:'#a9b4bf'}];
+  const max=Math.log10(420000),min=Math.log10(20);
+  const Y=v=>300-((Math.log10(v)-min)/(max-min))*250;
+  let html='';
+  groups.forEach((g,i)=>{
+    const x0=80+i*260;
+    html+=`<rect x="${x0}" y="${Y(g.best)}" width="70" height="${300-Y(g.best)}" rx="8" fill="${g.c}"/>`;
+    html+=`<rect x="${x0+84}" y="${Y(g.typ)}" width="70" height="${300-Y(g.typ)}" rx="8" fill="${g.c}" opacity=".45"/>`;
+    html+=`<text x="${x0+35}" y="${Y(g.best)-8}" fill="#f4f1ea" font-size="13" text-anchor="middle">${fmt(g.best)}</text>`;
+    html+=`<text x="${x0+119}" y="${Y(g.typ)-8}" fill="#f4f1ea" font-size="13" text-anchor="middle">${fmt(g.typ)}</text>`;
+    html+=`<text x="${x0+77}" y="328" fill="#9aa6b2" font-size="13" text-anchor="middle">${g.n}</text>`;
+  });
+  s.innerHTML=html;
+}
+const filters=document.getElementById('filters');
+TYPES.forEach(t=>{
+  const b=document.createElement('button');
+  b.className='chip'+(t==='all'?' on':'');
+  b.textContent=t;
+  b.onclick=()=>{active=t;[...filters.children].forEach(x=>x.classList.toggle('on',x.textContent===t));draw();};
+  filters.appendChild(b);
+});
+draw(); bars();
+document.getElementById('copy').onclick=async()=>{
+  await navigator.clipboard.writeText(document.getElementById('reply').innerText);
+  document.getElementById('copy').textContent='Copied';
+};
+</script>
+</body>
+</html>
